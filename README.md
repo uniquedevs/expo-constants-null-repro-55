@@ -69,20 +69,6 @@ Set `EXPO_USE_PRECOMPILED_MODULES=0` in `eas.json` to force source compilation:
 }
 ```
 
-## Suggested fix
-
-Fall back to `Bundle.main` in `ConstantsProvider.swift` when the framework bundle doesn't contain `EXConstants.bundle`:
-
-```swift
-let candidates = [
-  Bundle(for: ConstantsProvider.self).resourceURL,
-  Bundle.main.resourceURL
-].compactMap { $0?.appendingPathComponent("EXConstants.bundle") }
-guard let bundleUrl = candidates.first(where: { FileManager.default.fileExists(atPath: $0.path) }),
-      let bundle = Bundle(url: bundleUrl),
-      ...
-```
-
 ## Related
 
 - PR #44433 — introduced the xcframework switch
